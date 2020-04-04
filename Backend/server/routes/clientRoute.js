@@ -4,7 +4,7 @@ var router = express.Router()
 var {Client} = require('../models/client');
 
 const _ = require('lodash');
-router.post('/', (req, res) => {
+router.post('/add', (req, res) => {
     var body = _.pick(req.body, ['name', 'email' , 'contact', 'gender' ]);
     var client = new Client(body);
 
@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
 
 
   
-router.get('/', (req , res) =>{
+router.post('/', (req , res) =>{
   
     
     Client.findByName(req.body.name).then((clients)=>{

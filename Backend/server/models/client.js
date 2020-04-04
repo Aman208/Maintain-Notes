@@ -49,7 +49,7 @@ ClientSchema.statics.findByEmail = function(email){
 ClientSchema.statics.findByName = async function(name){
     var Client = this;
 
-   return await Client.find({ "name":  {$regex:name} }).limit(5);
+   return await Client.find({ "name":  {$regex:name ,$options :'i'} }).limit(5);
   
 
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../App.js';
+import './clientNotes.css';
 
 
 function Client_Notes() {

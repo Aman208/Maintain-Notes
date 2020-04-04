@@ -1,0 +1,131 @@
+
+.body{
+    margin:10px;
+    padding : 10px;
+    background: #1cc175;
+    
+}
+
+/* @media (min-width: 1200px){
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1480px; 
+    width: 1480px;
+    box-shadow: 0 0 black;
+   
+}
+} */
+
+.container{
+    background: #22a4b4;
+}
+ 
+
+
+.mainapp {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    border-bottom: 2px solid #22a4b4;
+    transform: scale(0.8);
+    justify-self:center;
+    
+}
+
+.clean {
+    position: relative;
+    height: 720px;
+    background: #fff;
+    width: 95%;
+    margin: 20px 14px;
+   
+}
+
+
+.controls {
+    position: relative;
+    top: 2px;
+    height: 40px;
+}
+
+
+span.right {
+    position: relative;
+    float: right;
+    letter-spacing: 14px;
+    font-size: 20px;
+    top: 2px;
+    margin: 0 -12px;
+}
+
+
+
+h1 {
+    font-family: Metropolis;
+    font-size: 40px;
+    color: #0598ab;
+}
+
+span.date {
+    font-family: Metropolis;
+    font-size: 14px;
+    position: relative;
+    top: -28px;
+    color: #525252;
+}
+
+p {
+    font-family: 'Nanum Pen Script', cursive, helvetica, arial, sans-serif;
+    font-size: 24px;
+    color: #333;
+    position: relative;
+    /* top: -22px; */
+    color: #525252;
+}
+
+
+
+
+
+.btm {
+    width: 100%;
+    height: 36px;
+    background: #22a4b4;
+    position: absolute;
+    bottom: 0px;
+}
+
+.extra {
+    bottom: 45px;
+    position: relative;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+ img{
+    height: 56px;
+    width: 76px;
+    
+    position: relative;
+    
+  
+}
+
+.item{
+    text-align:center;
+    display:block;
+    background-color: transparent;
+    border: 4px solid #1cc175;
+    margin-left: 10%;
+    padding: 10px;
+    margin-right: 10%; 
+  }
+
+
+
+
+
+

@@ -1,13 +1,26 @@
 import React from 'react';
 
-import './App.css';
+import  Home from './Home';
+import Login from './Auth/login';
+import Profile from './Profile/Profile';
 import ClientNotes from './Client_Notes/client_notes';
-import ClientSearch from './Client_Search/client_search';
+import { Route, BrowserRouter as Router , Switch} from 'react-router-dom';
+import history from './Components/history';
+
+import PrivateRoute from './Components/Helpers';
+
 function App() {
   return (
     <div className="App">
+       <Router history={history}>
+    <Switch>
+      <PrivateRoute exact path="/" component={Home} />
      
-    <ClientSearch/>
+      <Route path = "/login" component={Login}/>
+       <PrivateRoute path='/profile' component={Profile} /> 
+      <PrivateRoute path='/notes' component ={ClientNotes}/>
+    </Switch>
+  </Router>
      
     </div>
   );

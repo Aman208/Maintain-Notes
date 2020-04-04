@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
      bcrypt.compare(body.password, agent.password).then( respo => {
         if(respo === true)
         {  agent.generateAuthToken().then((token) => {
-          res.header('x-auth', token).send(agent);
+          res.header('x-auth', token).send({'token':token});
         })   
         }
         else{
