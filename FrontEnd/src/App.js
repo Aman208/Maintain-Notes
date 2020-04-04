@@ -13,16 +13,14 @@ function App() {
   return (
     <div className="App">
        <Router history={history}>
-    <Switch>
-      <PrivateRoute exact path="/" component={Home} />
-     
-      <Route path = "/login" component={Login}/>
-       <PrivateRoute path='/profile' component={Profile} /> 
-      <PrivateRoute path='/notes' component ={ClientNotes}/>
-    </Switch>
-  </Router>
-     
-    </div>
+        <Switch>
+          <PrivateRoute exact path="/" component={Home} />
+          <Route path = "/login" component={Login}/>
+          <PrivateRoute path='/profile' component={Profile} /> 
+          <PrivateRoute path='/notes:id' component ={ClientNotes}/>
+         </Switch>
+        </Router>
+     </div>
   );
 }
 

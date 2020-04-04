@@ -76,7 +76,7 @@ class  Home extends Component {
             if(y===null){
               y =[];
             }
-            y.push({ key:id , info:x , notes:"" , topic:""});
+            y.push({ key:id , info:x });
             localStorage.setItem("clients", JSON.stringify(y)); 
             this.setState({selectClients : y});
 
@@ -97,7 +97,7 @@ class  Home extends Component {
             placeholder="Search for..."
             value={this.state.query}
             onChange={this.handleInputChange}
-           
+            onfocusout={(e)=> this.setState({query : ""}) }
             />
             </Form>
 
@@ -111,26 +111,27 @@ class  Home extends Component {
         <br/>
         <Row>
          <Col sm={12}> 
-  {this.state.query !== "" ? <div><table id="t01">
-  <tr>
-    <th>Name</th>
-    <th>Email</th> 
-    <th>Gender</th>
-    <th>Contact</th>
-  </tr>
-  {this.state.filteredData.map(i =>  
-    <tr onClick={() => this.selectClient(i._id , i.name , i.gender , i.contact)} >
-    <td>{i.name}</td>
-    <td>{i.email}</td>
-    <td>{i.gender}</td>
-    <td>{i.contact}</td>
-  </tr>
-  )}
+          {this.state.query !== "" ?
+           <div><table id="t01">
+          <tr>
+            <th>Name</th>
+            <th>Email</th> 
+            <th>Gender</th>
+            <th>Contact</th>
+          </tr>
+          {this.state.filteredData.map(i =>  
+            <tr onClick={() => this.selectClient(i._id , i.name , i.gender , i.contact)} >
+            <td>{i.name}</td>
+            <td>{i.email}</td>
+            <td>{i.gender}</td>
+            <td>{i.contact}</td>
+          </tr>
+          )}
 
-</table>
+             </table>
 
-    </div> :null }
-    </Col>
+           </div> :null }
+          </Col>
          </Row>
       </Container>
        </div>
