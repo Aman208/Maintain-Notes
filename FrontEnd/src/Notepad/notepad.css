@@ -1,6 +1,6 @@
 
 .body{
-    margin:10px;
+  
     padding : 10px;
     background: #1cc175;
     
@@ -17,6 +17,7 @@
 
 .container{
     background: #22a4b4;
+   
 }
  
 
@@ -124,6 +125,7 @@ p {
     margin-right: 10%; 
   }
 
+  
 
 
 

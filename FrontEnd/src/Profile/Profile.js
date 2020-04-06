@@ -19,7 +19,7 @@ import React, { Component } from "react";
   
 
 render() {
-    return (<div style={{ backgroundColor: "white" }} >
+    return (<div   >
 
      
       <Container fluid style={{ marginTop: "0vh", minHeight: "100vh"  }}>
@@ -61,3 +61,27 @@ render() {
   
 
 export default Profile;
+
+
+
+//fetch('https://afternoon-plateau-16689.herokuapp.com/notes', {
+  //    method: 'GET',
+  //    headers: {
+  //      Accept: 'application/json',
+  //      'Content-Type': 'application/json',
+  //      'x-auth' : x
+  //    },
+  //    body: JSON.stringify({
+  //       clientId : str, 
+  //     }),
+  //  }).then((response) => response.json())
+  //  .then((responseJson) => {
+   
+  //    setNotes(responseJson);
+  //    console.log(responseJson);
+      
+  //  })
+  //  .catch((error) => {
+  //    console.error(error);
+  //    alert("Some Error Occur")
+  //  });

@@ -20,7 +20,7 @@ import { useHistory } from "react-router-dom";
   function handleSubmit(event) {
     event.preventDefault();
      
-    fetch('http://localhost:4000/auth/login', {
+    fetch('https://afternoon-plateau-16689.herokuapp.com/auth/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -13,7 +13,7 @@ function Navbar() {
     <Nav.Link style={{color:"white"}} as="h3">Profile</Nav.Link>
   </Nav.Item>
   
-  <Nav.Item as={Link} onClick={() =>  localStorage.setItem('token', '') } to="/login">
+  <Nav.Item as={Link} onClick={ async () => { await localStorage.setItem('token', '');  localStorage.setItem('client' ,null);} } to="/login">
     <Nav.Link style={{color:"white"}} as="h3" >SignOut </Nav.Link>
   </Nav.Item>
 </Nav>

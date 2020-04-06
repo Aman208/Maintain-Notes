@@ -9,13 +9,35 @@ function Client_Notes(props) {
    let x = ["Topic 1", "Topic 2", "Topic 3","Topic 4","Topic 5" ]
    let [topics ] = useState(x);
     let[client , setClient] = useState({});
+    let [notes  , setNotes] = useState([]);
 
-   useEffect(()=>{
+   useEffect( async ()=>{
       let str = (props.match.params.id).slice(4);
-      let x = JSON.parse(localStorage.getItem("clients"));
-      let y = x.filter(el => el.key === str);  
-       setClient(y[0].info);
-       console.log(y[0].info);
+      
+      let z = await localStorage.getItem("token");
+     
+fetch('https://afternoon-plateau-16689.herokuapp.com/notes', {
+     method: 'POST',
+     headers: {
+       Accept: 'application/json',
+       'Content-Type': 'application/json',
+       'x-auth' : z
+     },
+     body: JSON.stringify({
+        clientId : str, 
+      }),
+   }).then((response) => response.json())
+   .then((responseJson) => {
+     setNotes(responseJson);
+     console.log(responseJson);
+   })
+   .catch((error) => {
+     console.error( "Error:" ,error );
+   });
+       
+   let y = JSON.parse(localStorage.getItem("client"));
+      setClient(y.info);
+
    } , [props.match.params.id] )
 
 
@@ -26,7 +48,7 @@ function Client_Notes(props) {
       <div >
          <Navbar/>
        
-         <Alert as="h2" key="1" variant='primary'>
+         <Alert  key="1" variant='primary' style={{fontSize:"25px"}}>
             Name: {client.name}<br/>
             Gender : {client.gender}<br/>
             Contact : {client.contact}
@@ -38,29 +60,31 @@ function Client_Notes(props) {
             <li class="era">
                <h2 class="era__title">{i}</h2>
             </li>
-
-            <li class="entry entry--left">
-               <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                  <h2>Bacon Ipsum</h2>
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-               </div>
-            </li>
-
-
-            <li class="entry entry--right">
+            
+            
+                 <li class="entry entry--left">
+                 <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+                    <h2>Bacon Ipsum</h2>
+                    <p>Lorem Ipsum is simply dummy text release of Letraset sheets containing Lorem Ipsum passages,  </p>
+                 </div>
+              </li> 
+              
+            
+               <li class="entry entry--right">
                <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                   <h2>Bacon Ipsum</h2>
                   <p>Ground round short ribs fatback, salami shoulder sausage chuck shankle landjaeger drumstick ribeye meatloaf doner.</p>
                </div>
-            </li>
-
-            <li class="entry entry--left">
+              </li> 
+              <li class="entry entry--left">
                <div class="entry__content wow animated fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                   <h2>Bacon Ipsum</h2>
-                  <p>Swine pork belly prosciutto jowl pork chop chicken filet mignon cupim doner boudin.</p>
+                  <p>Lorem Ipsum is simply dummy text release of Letraset sheets containing Lorem Ipsum passages,  </p>
                </div>
             </li>
+            
+                
+            
       </ul>
    </div>
     ) }

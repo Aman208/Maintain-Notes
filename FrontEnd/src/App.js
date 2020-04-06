@@ -1,6 +1,6 @@
 import React from 'react';
 
-import  Home from './Home';
+import  Home from './Home/Home';
 import Login from './Auth/login';
 import Profile from './Profile/Profile';
 import ClientNotes from './Client_Notes/client_notes';

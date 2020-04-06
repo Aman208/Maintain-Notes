@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import './notepad.css';
-import { Container , Row  , Col , Form , Badge} from 'react-bootstrap';
+import { Container , Row  , Col , Form , Badge , Modal,Button , Spinner} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 
@@ -11,23 +11,27 @@ class Notepad extends Component {
         super(props);
         this.state = {
             date: moment(Date.now()).format('llll'),
-            selectClients:[] ,
-            text:""
+            client:{
+              key:"" ,
+             info:{ name : "" , email:"" , gender:"", contact:"" }
+            } ,
+            text:"" ,
+            topic:"",
+            show :false ,
+           
         }
+
+        this.updateTextArea = this.updateTextArea.bind(this);
+        this.updateTopic = this.updateTopic.bind(this);
     }
 
 componentWillMount(){
     setInterval(() => this.setTime(), 60*1000);
-    
-   this.setState({selectClients :this.props.selectClients })
  }
- componentDidUpdate(prevProps , prevState) {
-    // Typical usage (don't forget to compare props):
-    if (this.props.selectClients !== prevState.selectClients) {
-       
-            this.componentWillMount();
-    }
-  }
+
+ handleClose = () => {this.setState({show:false})};
+ handleShow = () =>   {this.setState({show:true})};
+
 
 
 setTime = () => {
@@ -37,27 +41,36 @@ setTime = () => {
 }
 
 
-deleteNote = async (key) =>{
-
-    let x = JSON.parse(localStorage.getItem("clients"));
-     x = x.filter(el => el.key !== key);
-     localStorage.setItem("clients" , JSON.stringify(x));
-     this.setState({selectClients : x});
+deleteNote =  () =>{
+   
+  this.props.flag();
 
 } 
 
 
 
-  updateTextArea = (event , key) => {
+  updateTextArea = (event) => {
     const x = event.target.value;
       this.setState({text : x});
   };
+
+  updateTopic = (event) =>{
+    const x = event.target.value;
+    this.setState({topic : x});
+ 
+  }
+
+  editNote =()=>{
+
+    this.setState({text : "" ,topic:"Select Topic"});
+  }
   
   saveNote = (key) => {
 
     let token = localStorage.getItem('token');
+    
 
-    fetch('http://localhost:4000/notes', {
+    fetch('https://afternoon-plateau-16689.herokuapp.com/notes/add', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -71,8 +84,7 @@ deleteNote = async (key) =>{
       }).then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-         
-        alert("Success");
+        
         this.deleteNote(key);
       })
       .catch((error) => {
@@ -89,23 +101,26 @@ deleteNote = async (key) =>{
 
  render(){
 
+  let {client }  = this.props;
+
     
   return (
        <div class="body">
            <Container fluid class="container">
+         
             <Row>
-            {this.state.selectClients.map(client => 
+           
                 <Col span={12}>
                 <div class="mainapp">
                 <div class="clean">
                     <Form>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label > <h3 style={{color: "#3290B1" ,  }}><b>Name : {client.info.name}  &nbsp;&nbsp;  Gender : {client.info.gender} &nbsp;&nbsp; Contact : {client.info.contact} </b> 
+                    <Form.Label > <h3 style={{color: "#3290B1" ,  }}><b>Name : {client.info.name}   &nbsp;&nbsp;  Gender : {client.info.gender}  &nbsp;&nbsp; Contact : {client.info.contact} </b> 
                     <Link to={{
                        pathname: `/notes:id=${client.key}`
                       }} >  <Badge  variant="secondary"> Previous Notes</Badge> </Link> </h3> </Form.Label>
                     
-                    <Form.Control as="select" size="lg" custom>
+                    <Form.Control as="select" size="lg" value={this.state.topic} custom onChange={this.updateTopic}>
                         <option>Select Topic</option>
                         <option>Topic 1</option>
                         <option>Topic 2</option>
@@ -121,7 +136,7 @@ deleteNote = async (key) =>{
                     <Form>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label as="h3">Write Your Notes Here</Form.Label>
-                    <Form.Control  onChange={(e)=> this.updateTextArea(e, client.key)}  as="textarea" rows="8" style={{fontSize: "35px" }}/>
+                    <Form.Control  onChange={this.updateTextArea} value={this.state.text}  as="textarea" rows="8" style={{fontSize: "35px" }}/>
                     </Form.Group>
                     </Form>
             
@@ -129,7 +144,7 @@ deleteNote = async (key) =>{
                 </div>
 
                 <div class="extra"> 
-                    <div class="item" onClick={()=> this.editNote(client.key)}>    
+                    <div class="item" onClick={()=> this.editNote()}>    
                     <img class="active" src="https://s33.postimg.cc/4jx9l53pb/pencil.png" alt ="Edit"/>
                     <h3>Edit</h3>
                     </div>
@@ -137,20 +152,35 @@ deleteNote = async (key) =>{
                     <img class="active" src="https://s33.postimg.cc/6bq8g3ki7/save.png" alt ="Save"/>
                     <h3>Save</h3>
                     </div>
-                    <div class="item" onClick={() => this.deleteNote(client.key)}>
+                    <div class="item" onClick={() => this.handleShow()}>
                     <img class="active" src="https://s33.postimg.cc/jsn6yyfe7/bin.png"  alt="Del"
                     />
                     <h3>Delete</h3>
                      </div>
                 </div>
+
+                <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>Do you want to delete this note ? </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={this.deleteNote}>
+                      Delete This
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               
 
                 <div class=" btm"></div>
                 </div>
            </Col>
 
-            )}
-            </Row>
+            
+                    </Row> }
             </Container>
          </div>
         

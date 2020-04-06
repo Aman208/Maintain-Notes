@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 const {authenticate } = require('../middleware/authenticate');
 
-router.post('/', authenticate , (req, res) => {
+router.post('/add', authenticate , (req, res) => {
     
         var note = new Note({
         text: req.body.text ,
@@ -19,9 +19,9 @@ router.post('/', authenticate , (req, res) => {
          (e) => { res.status(400).send(e); });
 });
   
-router.get('/', authenticate ,(req, res) => {
+router.post('/', authenticate ,(req, res) => {
        
-        Note.find({_id : req.clientId  }).limit(10)
+        Note.find({client : req.clientId  }).limit(10)
         .then((notes) => {
         res.status(200).send({notes});
         }, (e) => {

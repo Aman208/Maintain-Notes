@@ -1,13 +1,11 @@
 import React , {Component} from 'react';
 import axios from 'axios';
-import {Form, Button , Container , Row , Col } from 'react-bootstrap';
+import {Form, Button , Spinner,Container , Row , Col } from 'react-bootstrap';
 
+import Notepad from '../Notepad/notepad';
+import  Navbar from '../Components/Navbar';
 
-
-import Notepad from './Notepad/notepad';
-import  Navbar from './Components/Navbar';
-
-import './Client_Search/search.css';
+import './search.css';
 
 class  Home extends Component {
    
@@ -17,40 +15,51 @@ class  Home extends Component {
           query: "",
           clients: [],
           filteredData: [] ,
-
-          selectClients:[]
+          flag:0,
+          selectClient:{
+             key:"" ,
+             info : { name : "" , email:"" , gender:"", contact:"" }
+          } ,
+          loading : false
 
         };
     
     
          this.getData = this.getData.bind(this);
+         this.handleflag = this.handleflag.bind(this);
     };
 
-    componentWillMount(){
+  async componentWillMount(){
        
-      let x = JSON.parse(localStorage.getItem("clients"));
+      let x = await JSON.parse(localStorage.getItem("client"));
        if(x!==null)
-       {this.setState({selectClients : x });}
-       else{
-        this.setState({selectClients : []});
-       }
+       {this.setState({selectClient : x  , flag:1});}
+      
+  }
+
+   async handleflag(){
+
+      this.setState({flag :0 });
+      await localStorage.setItem('client' ,null);
+
     }
 
 
    
     
-      handleInputChange = event => {
+    handleInputChange = event => {
         const query = event.target.value;
           this.getData(query);
            this.setState({query : query });
     
       };
     
-      getData = (val) => {
+    getData = (val) => {
          
+        this.setState({loading:true});
         axios({
           method: 'post',
-          url: `http://localhost:4000/client`,
+          url: `https://afternoon-plateau-16689.herokuapp.com/client`,
           data: {
             name: val
           }
@@ -64,22 +73,23 @@ class  Home extends Component {
     
           this.setState({
             clients : clients,
-            filteredData
+            filteredData,
+            loading:false
           });
          });
       };
 
 
-   selectClient =  (id , name , gender , contact) => {
-           let x = {name , gender , contact };
-          
-           let y = JSON.parse(localStorage.getItem("clients"));
-            if(y===null){
-              y =[];
-            }
-            y.push({ key:id , info:x });
-            localStorage.setItem("clients", JSON.stringify(y)); 
-            this.setState({selectClients : y});
+   selectClient = async (id , name , gender , contact , email) => {
+         
+        let x = {name , gender , contact , email }
+           
+      
+        this.setState({selectClient :{key : id , info:x} , flag:1 });
+
+        await localStorage.setItem("client" , JSON.stringify({key : id , info:x}));
+
+        
 
    }
 
@@ -88,7 +98,7 @@ class  Home extends Component {
     <div className="App">
      <Navbar/>
 
-     <div style={{width:"90%" , marginTop:"20px" ,padding : "10px" }}>
+     <div style={{width:"100%" , marginTop:"20px" ,padding : "10px" }}>
       <Container style={{background:"white"}}>
         <Row>
           <Col sm={10}  >
@@ -121,7 +131,7 @@ class  Home extends Component {
             <th>Contact</th>
           </tr>
           {this.state.filteredData.map(i =>  
-            <tr onClick={() => this.selectClient(i._id , i.name , i.gender , i.contact)} >
+            <tr onClick={() => this.selectClient(i._id , i.name , i.gender , i.contact , i.email)} >
             <td>{i.name}</td>
             <td>{i.email}</td>
             <td>{i.gender}</td>
@@ -132,12 +142,29 @@ class  Home extends Component {
              </table>
 
            </div> :null }
+
+
+
           </Col>
          </Row>
+          
+          <Row>
+            <Col>
+         {this.state.loading ? <div style={{textAlign: "center"}}>
+           <Spinner animation="grow" variant="primary" />
+           <Spinner animation="grow" variant="secondary" />
+           <Spinner animation="grow" variant="success" />
+           <Spinner animation="grow" variant="danger" />
+           <Spinner animation="grow" variant="warning" />
+           <Spinner animation="grow" variant="info" />
+           <Spinner animation="grow" variant="light" />
+           <Spinner animation="grow" variant="dark" />
+           </div> : null}
+           </Col></Row>
       </Container>
        </div>
-    
-    <Notepad selectClients={this.state.selectClients} />
+    {this.state.flag ?  <Notepad client={this.state.selectClient} flag ={this.handleflag} /> : null }
+   
      
     </div>
   );
