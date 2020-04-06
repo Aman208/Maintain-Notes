@@ -27,6 +27,7 @@ class  Home extends Component {
     };
 
     componentWillMount(){
+       
       let x = JSON.parse(localStorage.getItem("clients"));
        if(x!==null)
        {this.setState({selectClients : x });}

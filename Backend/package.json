@@ -1,11 +1,10 @@
 {
-  "name": "heroku-server",
+  "name": "verse-network-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/server.js"
+    "start": "node server/server.js"
   },
   "engines": {
     "node": "12.13.1"
@@ -22,7 +21,7 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.7.0",
     "validator": "^12.1.0"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }
-
-

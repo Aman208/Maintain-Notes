@@ -3,12 +3,13 @@
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-var MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect( "mongodb://127.0.0.1:27017/ClientNotes" , {useNewUrlParser : true ,useUnifiedTopology: true ,
+
+mongoose.connect( "mongodb+srv://aman208:atlas208@cluster0-ss781.mongodb.net/NotesApp?retryWrites=true&w=majority" , {useNewUrlParser : true ,useUnifiedTopology: true ,
   useCreateIndex: true,
   useFindAndModify: false
- } ).then(con=>{
+ } ).then(con => {
     console.log('Databse connected successfully');
+
     
 }).catch ( err => console.log(err));

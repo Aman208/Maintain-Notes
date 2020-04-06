@@ -2,7 +2,7 @@ const express = require('express');
 var app = express();
 const port = process.env.PORT || 4000;
 
-//require('./config/config');
+require('./config/config');
 require("./mongoose.js");
   
 const bodyParser = require('body-parser');
@@ -25,6 +25,10 @@ app.use('/auth' , authRoute);
 
 app.use('/notes' , notesRoute);
 
+app.get('/' , (req ,res) =>{
+  res.send("Welcome to Verse Network Backend");
+} )
+
 app.listen(port, () => {
   console.log(`Started up at port ${port}`);
   
@@ -32,5 +36,3 @@ app.listen(port, () => {
 
 module.exports = {app};
 
-
-//https://codepen.io/jasperlachance/pen/ZWOoBQ

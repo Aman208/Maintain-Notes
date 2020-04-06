@@ -10,4 +10,3 @@ if (env === 'development' || env === 'test') {
 }
 
 
-//https://afternoon-depths-75952.herokuapp.com/ deployed to Heroku

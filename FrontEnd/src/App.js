@@ -10,6 +10,8 @@ import history from './Components/history';
 import PrivateRoute from './Components/Helpers';
 
 function App() {
+
+   
   return (
     <div className="App">
        <Router history={history}>
